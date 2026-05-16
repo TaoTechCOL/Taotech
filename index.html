@@ -84,11 +84,29 @@
 
         .mobile-menu-overlay {
             position:fixed; top:0; left:0; right:0; bottom:0;
-            background:rgba(15,12,9,0.96); backdrop-filter:blur(10px);
-            z-index:999; display:flex; flex-direction:column; align-items:center;
+            background:rgba(15,12,9,0.97); backdrop-filter:blur(10px);
+            z-index:9999; display:flex; flex-direction:column; align-items:center;
             justify-content:center; gap:2rem; animation:fadeIn 0.3s ease;
         }
-        .mobile-menu-overlay a { color:#f4ede0; text-decoration:none; font-size:1.5rem; font-weight:600; font-family:'Outfit',sans-serif; }
+        .mobile-menu-overlay a {
+            color:#f4ede0; text-decoration:none; font-size:1.5rem; font-weight:600;
+            font-family:'Outfit',sans-serif; transition: color 0.2s ease;
+        }
+        .mobile-menu-overlay a:hover { color:#d96847; }
+        .mobile-menu-close {
+            position:absolute; top:1rem; right:5%;
+            width:48px; height:48px;
+            background:#d96847; color:#fff;
+            border:none; border-radius:8px;
+            font-size:1.5rem; font-weight:700;
+            cursor:pointer; display:flex;
+            align-items:center; justify-content:center;
+            transition: transform 0.2s ease, background 0.2s ease;
+            z-index:10000;
+            line-height:1;
+        }
+        .mobile-menu-close:hover { transform: scale(1.08); background:#b14a2c; }
+        .mobile-menu-close:active { transform: scale(0.95); }
         @keyframes fadeIn { from{opacity:0} to{opacity:1} }
         @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-15px)} }
 
@@ -377,13 +395,25 @@ const Navigation = () => {
             </div>
         </nav>
         {mobileOpen && (
-            <div className="mobile-menu-overlay" onClick={()=>setMobileOpen(false)}>
-                <button onClick={()=>setMobileOpen(false)} style={{position:'absolute',top:'1.5rem',right:'5%',background:'transparent',border:'none',color:'#f4ede0',fontSize:'2rem',cursor:'pointer'}}>✕</button>
+            <div className="mobile-menu-overlay">
+                <button
+                    type="button"
+                    className="mobile-menu-close"
+                    onClick={()=>setMobileOpen(false)}
+                    aria-label="Cerrar menú"
+                >✕</button>
                 <a href="#servicios"     onClick={()=>setMobileOpen(false)}>Servicios</a>
                 <a href="#como-funciona" onClick={()=>setMobileOpen(false)}>Proceso</a>
                 <a href="#beneficios"    onClick={()=>setMobileOpen(false)}>Beneficios</a>
                 <a href="#contacto"      onClick={()=>setMobileOpen(false)}>Contacto</a>
-                <button onClick={()=>{document.getElementById('contacto').scrollIntoView({behavior:'smooth'}); setMobileOpen(false);}} style={{padding:'1rem 2rem',background:'#b14a2c',color:'#f4ede0',border:'none',borderRadius:'4px',fontFamily:'Outfit,sans-serif',fontWeight:'700',fontSize:'1rem',cursor:'pointer',marginTop:'1rem'}}>Comenzar</button>
+                <button
+                    type="button"
+                    onClick={()=>{
+                        setMobileOpen(false);
+                        setTimeout(()=>document.getElementById('contacto').scrollIntoView({behavior:'smooth'}), 100);
+                    }}
+                    style={{padding:'1rem 2rem',background:'#b14a2c',color:'#f4ede0',border:'none',borderRadius:'4px',fontFamily:'Outfit,sans-serif',fontWeight:'700',fontSize:'1rem',cursor:'pointer',marginTop:'1rem'}}
+                >Comenzar</button>
             </div>
         )}
         </>
@@ -893,8 +923,8 @@ const Footer = () => (
                 </div>
             </div>
             <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',flexWrap:'wrap',gap:'1rem'}}>
-                <p style={{color:'#a89a82',fontSize:'clamp(0.75rem,1.5vw,0.85rem)'}}>© 2025 TaoTech. Todos los derechos reservados.</p>
-                <p style={{color:'#a89a82',fontSize:'clamp(0.75rem,1.5vw,0.85rem)'}}>Hecho con ❤️ en Colombia</p>
+                <p style={{color:'#a89a82',fontSize:'clamp(0.75rem,1.5vw,0.85rem)'}}>© 2026 TaoTech. Todos los derechos reservados.</p>
+                <p style={{color:'#a89a82',fontSize:'clamp(0.75rem,1.5vw,0.85rem)'}}>Hecho en Colombia</p>
             </div>
         </div>
     </footer>
